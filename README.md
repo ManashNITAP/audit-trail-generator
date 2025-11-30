@@ -8,6 +8,7 @@ A full-stack MERN (MongoDB, Express, React, Node.js) web application that automa
 - 📊 Automatic detection of added and removed words
 - 🕐 Timestamped version history
 - 📈 Character length tracking
+- 🗑️ Delete versions functionality
 - 🎨 Modern, responsive UI built with React and Tailwind CSS
 - 🏗️ Clean MVC architecture
 
@@ -174,6 +175,20 @@ Get all saved versions.
 }
 ```
 
+### DELETE `/api/versions/:id`
+Delete a version by ID.
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Version deleted successfully",
+  "data": {
+    "id": "uuid"
+  }
+}
+```
+
 ## How It Works
 
 1. **Word Detection Algorithm**: The custom `wordDiff.js` utility tokenizes text into words, counts occurrences, and compares two versions to detect:
@@ -222,7 +237,8 @@ Get all saved versions.
 2. Type or edit text in the "Content Editor" textarea
 3. Click "Save Version" to create an audit trail entry
 4. View all saved versions in the "Version History" panel
-5. Each version shows:
+5. Click the delete icon (🗑️) to remove a version
+6. Each version shows:
    - Timestamp
    - Added words (highlighted in green)
    - Removed words (highlighted in red)
@@ -235,4 +251,3 @@ ISC
 ## Author
 
 Built following MVC architecture principles with clean, readable code.
-
