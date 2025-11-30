@@ -49,5 +49,16 @@ export const getVersions = async () => {
   }
 };
 
+//Api to delete a version
+export const deleteVersion = async (id) => {
+  try {
+    const response = await apiClient.delete(`/versions/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting version:', error);
+    throw error.response?.data || { message: 'Failed to delete version' };
+  }
+};
+
 export default apiClient;
 

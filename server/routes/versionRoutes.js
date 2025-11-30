@@ -1,5 +1,5 @@
 import express from 'express';
-import { saveVersion, getVersions } from '../controllers/versionController.js';
+import { saveVersion, getVersions, deleteVersion } from '../controllers/versionController.js';
 
 const router = express.Router();
 
@@ -13,6 +13,9 @@ router.post('/save-version', saveVersion);
 
 // GET /versions - Get all versions
 router.get('/versions', getVersions);
+
+// DELETE /versions/:id - Delete a version by ID
+router.delete('/versions/:id', deleteVersion);
 
 export default router;
 

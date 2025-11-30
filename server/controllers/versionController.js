@@ -93,3 +93,43 @@ export const getVersions = async (req, res) => {
   }
 };
 
+/**
+ * Delete a version by ID
+ * DELETE /versions/:id
+ */
+export const deleteVersion = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Version ID is required',
+      });
+    }
+
+    // Find and delete the version
+    const deletedVersion = await Version.findOneAndDelete({ id });
+
+    if (!deletedVersion) {
+      return res.status(404).json({
+        success: false,
+        message: 'Version not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Version deleted successfully',
+      data: { id: deletedVersion.id },
+    });
+  } catch (error) {
+    console.error('Error deleting version:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting version',
+      error: error.message,
+    });
+  }
+};
+

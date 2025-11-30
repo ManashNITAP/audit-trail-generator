@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Content from '../components/Content';
 import Versions from '../components/Versions';
-import { getVersions } from '../services/api';
+import { getVersions, deleteVersion } from '../services/api';
 
 /**
  * Home Page Component
@@ -43,6 +43,28 @@ const Home = () => {
     fetchVersions();
   };
 
+  /**
+   * Handle version deletion
+   */
+  const handleVersionDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this version?')) {
+      return;
+    }
+
+    try {
+      const response = await deleteVersion(id);
+      if (response.success) {
+        // Refresh versions list after deletion
+        fetchVersions();
+      } else {
+        setError('Failed to delete version');
+      }
+    } catch (err) {
+      console.error('Error deleting version:', err);
+      setError(err.message || 'Failed to delete version');
+    }
+  };
+
   // Load versions on component mount
   useEffect(() => {
     fetchVersions();
@@ -74,7 +96,7 @@ const Home = () => {
           </div>
 
           <div className="flex-1 w-full">
-            <Versions versions={versions} isLoading={isLoading} />
+            <Versions versions={versions} isLoading={isLoading} onDelete={handleVersionDelete} />
           </div>
         </div>
       </div>
